@@ -36,8 +36,8 @@ docker exec -it spark-sql-on-docker_master_1 python -m pytest /tmp/src/TaxiTripS
 ## Documentation
 
 We have a dataset `data/taxi_ny_data.csv` with data from the different New York taxi trips, the goal is to calculate different indicators from these data.
-The program is sequenced as follows: We have a main function which is for reading and writing data.
-It calls other functions on top that will transform the data and return a dataframe with new metrics.
+
+The program is sequenced as follows: We have a main function which is for reading and writing data who calls other functions that will transform the data and return a dataframe with new metrics.
 
 ### Reading and writing data function
 
@@ -122,7 +122,7 @@ df.select("id","average_speed_kmh")
 #### trip_by_intervaldate
 
 `trip_by_intervaldate` return a dataframe, the number of trip made according to the day's schedule in 4-hour increments :
-- We made an aggregation on the pickup datetime, and created a 4 hours window with the `window` function of Spark SQL.
+- we made an aggregation on the pickup datetime, and created a 4 hours window with the `window` function of Spark SQL.
 ```python
 df.groupBy(F.window(F.col("pickup_datetime"), "4 hours").alias("window")) \
     .count() \
@@ -132,6 +132,7 @@ df.groupBy(F.window(F.col("pickup_datetime"), "4 hours").alias("window")) \
 ## Credit
 
 Original docker spark : https://github.com/suraj95/Spark-on-Docker
+
 My modifications : 
 - add hive jar
 - add pytest
