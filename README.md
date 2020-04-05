@@ -13,14 +13,17 @@ docker-compose up --scale worker=$NUMBBER_OF_WORKER
 Run Spark SQL with `pySpark` in the container :
 
 ```bash
-docker exec -it spark-on-docker-master_master_1 /bin/bash bin/spark-submit --deploy-mode client /tmp/src/TaxiTripSpark.py /tmp/data/train.csv /tmp/output
+docker exec -it spark-sql-on-docker_master_1 /bin/bash bin/spark-submit --deploy-mode client /tmp/src/TaxiTripSpark.py /tmp/data/taxi_ny_data.csv /tmp/output
 ```
 
 Run Spark SQL `Test` in the container :
 
 ```bash
-docker exec -it spark-on-docker-master_master_1 python -m pytest -s /tmp/src/TaxiTripSpark_test.py
+docker exec -it spark-sql-on-docker_master_1 python -m pytest /tmp/src/TaxiTripSpark_test.py
 ```
+
+## Documentation
+
 
 ## Credit
 

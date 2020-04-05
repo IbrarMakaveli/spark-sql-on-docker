@@ -1,3 +1,8 @@
 # Files to ignore
 
-data/train.csv
+# exclude everything
+src/*
+
+# exception to the rule
+!src/TaxiTripSpark_test.py
+!src/TaxiTripSpark.py
