@@ -1,0 +1,48 @@
+version: "3.7"
+services:
+
+  master:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: bin/spark-class org.apache.spark.deploy.master.Master -h master
+    hostname: master
+    environment:
+      MASTER: spark://master:7077
+      SPARK_CONF_DIR: /conf
+      SPARK_PUBLIC_DNS: localhost
+    expose:
+      - 7077
+      - 8080
+    ports:
+      - 4040:4040
+      - 6066:6066
+      - 7077:7077
+      - 8080:8080
+    volumes:
+      - ./conf/master:/tmp/conf
+      - ./data:/tmp/data
+      - ./output:/tmp/output
+      - ./src:/tmp/src
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://master:7077
+    hostname: worker
+    environment:
+      SPARK_CONF_DIR: /conf
+      SPARK_WORKER_CORES: 2
+      SPARK_WORKER_MEMORY: 1g
+      SPARK_PUBLIC_DNS: localhost
+    links:
+      - master
+    expose:
+      - 8881
+      - 8882
+      - 8883
+    volumes:
+      - ./conf/worker:/tmp/conf
+      - ./output:/tmp/output
+      - ./data:/tmp/data
